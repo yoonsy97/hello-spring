@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+  <form action="/members/new" method="post">
+
+
+    <input type="radio" name="userlevel" value="1">일반회원
+    <input type="radio" name="userlevel" value="2">기업회원
+    <div class="form-group">
+      <label for="UserId">아이디</label>
+      <input type="text" id="UserId" name="UserId" placeholder="이름을
+입력하세요">
+      <label for="Userpassword">이름</label>
+      <input type="text" id="Userpassword" name="Userpassword" placeholder="이름을
+입력하세요">
+    </div>
+    <button type="submit">등록</button>
+  </form>
+</div> <!-- /container -->
+</body>
+</html>
