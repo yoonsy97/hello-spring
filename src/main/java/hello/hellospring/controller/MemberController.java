@@ -20,6 +20,8 @@ public class MemberController {
     //하나만 생성해서 공용으로 쓰면됨
     private final MemberService memberService;
 
+
+
     @Autowired
     public MemberController(MemberService memberService) {
         this.memberService=memberService;
@@ -35,10 +37,8 @@ public class MemberController {
         Member member=new Member();
 
         BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
-
         member.setUserid(form.getUserId());
-        //member.setUserpassword(form.getUserpassword());
-        member.setUserpassword(passwordEncoder.encode(form.getUserpassword()));
+        member.setUserpassword(form.getUserpassword());
         member.setLevel(form.getUserlevel());
 
         memberService.join(member);
@@ -53,5 +53,6 @@ public class MemberController {
         model.addAttribute("members",members);
         return "members/memberList";
     }
+
 
 }

@@ -5,6 +5,7 @@ import hello.hellospring.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.EntityManager;
 
@@ -22,12 +23,16 @@ public class SpringConfig {
 
     @Bean
     public MemberService memberService(){
-        return new MemberService(memberRepository());
+        return new MemberService(memberRepository(),passwordEncoder());
     }
 
     @Bean
     public MemberRepository memberRepository(){
         return new JpaMemberRepository(em);
 
+    }
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }
