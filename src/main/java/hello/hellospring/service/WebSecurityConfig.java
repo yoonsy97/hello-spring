@@ -22,6 +22,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/").permitAll();
+
+        http.logout().logoutUrl("/home");
     }
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception{
