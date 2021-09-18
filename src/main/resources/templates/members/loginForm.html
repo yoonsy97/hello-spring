@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+
+<script type ="text/javascript">
+    var message='${msg}';
+    alert(msg);
+
+</script>
+
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2>로그인</h2>
+    </div>
+
+
+
+    <form action="/login" method="post">
+
+
+        <div class="form-group">
+            <label for="UserId">아이디</label>
+            <input type="text" id="UserId" name="UserId" placeholder="아이디">
+            <label for="Userpassword">이름</label>
+            <input type="text" id="Userpassword" name="Userpassword" placeholder="패스워드">
+        </div>
+        <button type="submit">로그인</button>
+
+    </form>
+
+</div> <!-- /container -->
+</body>
+</html>
