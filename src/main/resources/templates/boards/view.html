@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="container">
+<tr class="result" data-th-each="view:${view}">
+    <p> 글번호 : [[${view.bno}]]</p>
+    <p> 제목 : [[${view.title}]]</p>
+    <p> 작성자 :[[${view.writer}]]</p>
+    <p> 내용 :[[${view.content}]]</p>
+
+</tr>
+
+</div>
+
+</body>
+</html>

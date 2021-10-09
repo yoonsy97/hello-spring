@@ -1,5 +1,7 @@
 package hello.hellospring.service;
 
+import hello.hellospring.repository.BoardRepository;
+import hello.hellospring.repository.JpaBoardRepository;
 import hello.hellospring.repository.JpaMemberRepository;
 import hello.hellospring.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,18 @@ public class SpringConfig {
         return new JpaMemberRepository(em);
 
     }
+
+
+    @Bean
+    public BoardRepository boardRepository(){ return new JpaBoardRepository(em);
+    }
+
+
+    @Bean
+    public BoardService boardService(){return new BoardService(boardRepository());}
+
+
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
