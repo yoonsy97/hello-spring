@@ -3,7 +3,11 @@ package hello.hellospring.controller;
 import hello.hellospring.domain.Board;
 import hello.hellospring.service.BoardService;
 import hello.hellospring.service.MemberService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +25,7 @@ public class BoardController {
     private final BoardService boardService;
     private final MemberService memberService;
 
+    private static final Logger logger= LoggerFactory.getLogger(BoardController.class);
 
     @Autowired BoardController(BoardService boardService,MemberService memberService){
         this.boardService=boardService;
@@ -29,9 +34,19 @@ public class BoardController {
     }
 
     @GetMapping("/boardList")
-    public String list(Model model){
+    public String list(Model model, Pageable pageable){
+
+
+
         List<Board> boards=boardService.findBoards();
         List<Member> writers= memberService.findWriter(boards);
+        for(Board i:boards){
+            logger.info("userid"+i.getWriter().getUserid());
+
+
+        }
+
+
 
         model.addAttribute("boards",boards);
         model.addAttribute("writers",writers);
@@ -59,9 +74,7 @@ public class BoardController {
     public String writeboard(HttpServletRequest request, BoardForm boardForm){
 
         Long a= Long.valueOf(1);
-        Board board = new Board();
-        board.setTitle(boardForm.getTitle());
-        board.setContent(boardForm.getContent());
+
 
         HttpSession session= request.getSession(false);
         if(session==null){
@@ -69,14 +82,19 @@ public class BoardController {
         }
         else {
             Member member=(Member) session.getAttribute(SessionConstants.LOGIN_MEMBER);
-            board.setWriter(member.getId());
+            Board board=Board.builder()
+                    .title(boardForm.getTitle())
+                    .content(boardForm.getContent())
+                    .writer(member)
+                    .build();
+
+            boardService.write(board);
 
         }
-        boardService.write(board);
-
-
 
         return "redirect:/";
+
+
     }
 
 

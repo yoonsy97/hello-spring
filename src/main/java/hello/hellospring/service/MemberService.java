@@ -2,6 +2,7 @@ package hello.hellospring.service;
 
 import hello.hellospring.domain.Board;
 import hello.hellospring.domain.Member;
+import hello.hellospring.repository.BoardRepository;
 import hello.hellospring.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,11 +17,13 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final BoardRepository boardRepository;
 
 
-    public MemberService (MemberRepository memberRepository,BCryptPasswordEncoder passwordEncoder){ //외부에서 넣어주도록
+    public MemberService (MemberRepository memberRepository,BCryptPasswordEncoder passwordEncoder,BoardRepository boardRepository){ //외부에서 넣어주도록
         this.memberRepository=memberRepository;
         this.passwordEncoder=passwordEncoder;
+        this.boardRepository=boardRepository;
     }
 
     /**
@@ -32,7 +35,7 @@ public class MemberService {
 
         validateDuplicatedMember(member);
 
-        member.setUserpassword(passwordEncoder.encode(member.getUserpassword()));
+
         memberRepository.save(member);
       return member.getId();
 
@@ -59,14 +62,20 @@ public class MemberService {
     public List<Member> findWriter(List<Board> boards){
         List<Member> result=new ArrayList<>();
         for(int i=0;i<boards.size();i++) {
-            memberRepository.findById(boards.get(i).getWriter()).ifPresent(member->result.add(member));
-
+            //memberRepository.findById(boards.get(i).getWriter()).ifPresent(member->result.add(member));
+            result.add(boards.get(i).getWriter());
             //result.add(memberRepository.findById(boards.get(i).getWriter()).ifPresent());
 
         }
         return result;
     }
 
+    public List<Board> findWrittenBoards(Member member){
+
+        return boardRepository.findByUserId(member);
+
+
+    }
 
 
 }

@@ -1,8 +1,17 @@
 package hello.hellospring.domain;
 
-import javax.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.*;
+import java.util.*;
+
+@Getter
 @Entity
+@Table(name="member")
+@NoArgsConstructor
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,36 +24,16 @@ public class Member {
     @Column(name="level")
     private int level;
 
+    @OneToMany(mappedBy="writer", fetch=FetchType.EAGER)
+    private List<Board> boardList=new ArrayList<Board>();
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
+    @Builder
+    public Member(String userid, String userpassword, int level) {
         this.userid = userid;
+        this.userpassword=userpassword;
+        this.level=level;
     }
 
-    public int getLevel() {
-        return level;
-    }
 
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public String getUserpassword() {
-        return userpassword;
-    }
-
-    public void setUserpassword(String userpassword) {
-        this.userpassword = userpassword;
-    }
 }

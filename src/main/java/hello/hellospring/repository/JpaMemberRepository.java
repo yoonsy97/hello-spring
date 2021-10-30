@@ -1,5 +1,6 @@
 package hello.hellospring.repository;
 
+import hello.hellospring.domain.Board;
 import hello.hellospring.domain.Member;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,4 +48,11 @@ public class JpaMemberRepository implements MemberRepository{
         return em.createQuery("select m from Member m", Member.class)
                 .getResultList();
     }
+
+    @Override
+    public List<Board> findWrittenBoard(Member writer) {
+        return em.createQuery("select b from Board b where b.writer=writer").getResultList();
+    }
+
+
 }

@@ -15,6 +15,9 @@ public class JpaBoardRepository implements BoardRepository{
         this.em=em;
     }
 
+
+
+
     @Override
     public Board save(Board board) {
         em.persist(board);
@@ -22,11 +25,14 @@ public class JpaBoardRepository implements BoardRepository{
     }
 
     @Override
-    public Optional<Board> findByUserId(Long userid) {
-        List<Board> result = em.createQuery("select m from Board m where m.writer=: userid", Board.class)
-                .setParameter("userid", userid)
+    public List<Board> findByUserId(Member writer) {
+
+        List<Board> result = em.createQuery("select m from Board m where m.writer=: writer", Board.class)
+                .setParameter("writer", writer)
                 .getResultList();
-        return result.stream().findAny();
+
+
+        return result;
     }
 
     @Override
@@ -43,6 +49,6 @@ public class JpaBoardRepository implements BoardRepository{
     @Override
     public List<Board> findAll() {
         return em.createQuery("select m from Board m", Board.class)
-                .getResultList();
+               .getResultList();
     }
 }

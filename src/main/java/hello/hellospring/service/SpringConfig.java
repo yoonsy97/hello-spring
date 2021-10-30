@@ -25,7 +25,7 @@ public class SpringConfig {
 
     @Bean
     public MemberService memberService(){
-        return new MemberService(memberRepository(),passwordEncoder());
+        return new MemberService(memberRepository(),passwordEncoder(),boardRepository());
     }
 
     @Bean

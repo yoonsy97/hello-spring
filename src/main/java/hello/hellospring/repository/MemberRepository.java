@@ -1,5 +1,6 @@
 package hello.hellospring.repository;
 
+import hello.hellospring.domain.Board;
 import hello.hellospring.domain.Member;
 
 import java.util.List;
@@ -10,5 +11,5 @@ public interface MemberRepository {
     Optional<Member> findById(Long id);
     Optional<Member> findByUserId(String id);
     List<Member> findAll();
-
+    List<Board> findWrittenBoard(Member writer);
 }
