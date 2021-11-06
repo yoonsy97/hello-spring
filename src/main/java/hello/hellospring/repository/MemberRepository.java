@@ -11,5 +11,4 @@ public interface MemberRepository {
     Optional<Member> findById(Long id);
     Optional<Member> findByUserId(String id);
     List<Member> findAll();
-    List<Board> findWrittenBoard(Member writer);
 }

@@ -49,10 +49,5 @@ public class JpaMemberRepository implements MemberRepository{
                 .getResultList();
     }
 
-    @Override
-    public List<Board> findWrittenBoard(Member writer) {
-        return em.createQuery("select b from Board b where b.writer=writer").getResultList();
-    }
-
 
 }

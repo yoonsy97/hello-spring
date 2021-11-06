@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import java.sql.DriverManager;
 
 
-@EnableJpaAuditing
+@EnableJpaAuditing(modifyOnCreate = false)
 @SpringBootApplication
 public class HelloSpringApplication {
 

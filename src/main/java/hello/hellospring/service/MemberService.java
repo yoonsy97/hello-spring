@@ -2,8 +2,10 @@ package hello.hellospring.service;
 
 import hello.hellospring.domain.Board;
 import hello.hellospring.domain.Member;
+import hello.hellospring.domain.Reply;
 import hello.hellospring.repository.BoardRepository;
 import hello.hellospring.repository.MemberRepository;
+import hello.hellospring.repository.ReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,12 +20,14 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final BoardRepository boardRepository;
+    private final ReplyRepository replyRepository;
 
 
-    public MemberService (MemberRepository memberRepository,BCryptPasswordEncoder passwordEncoder,BoardRepository boardRepository){ //외부에서 넣어주도록
+    public MemberService (MemberRepository memberRepository,BCryptPasswordEncoder passwordEncoder,BoardRepository boardRepository, ReplyRepository replyRepository){ //외부에서 넣어주도록
         this.memberRepository=memberRepository;
         this.passwordEncoder=passwordEncoder;
         this.boardRepository=boardRepository;
+        this.replyRepository=replyRepository;
     }
 
     /**
@@ -73,6 +77,13 @@ public class MemberService {
     public List<Board> findWrittenBoards(Member member){
 
         return boardRepository.findByUserId(member);
+
+
+    }
+
+
+    public List<Reply> findWrittenReplies(Member member){
+            return replyRepository.findByUserId(member);
 
 
     }

@@ -1,9 +1,7 @@
 package hello.hellospring.service;
 
-import hello.hellospring.repository.BoardRepository;
-import hello.hellospring.repository.JpaBoardRepository;
-import hello.hellospring.repository.JpaMemberRepository;
-import hello.hellospring.repository.MemberRepository;
+import hello.hellospring.domain.Reply;
+import hello.hellospring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,8 +22,13 @@ public class SpringConfig {
 
 
     @Bean
+    public ReplyService replyService(){
+        return new ReplyService(replyRepository());
+    }
+
+    @Bean
     public MemberService memberService(){
-        return new MemberService(memberRepository(),passwordEncoder(),boardRepository());
+        return new MemberService(memberRepository(),passwordEncoder(),boardRepository(),replyRepository());
     }
 
     @Bean
@@ -33,6 +36,7 @@ public class SpringConfig {
         return new JpaMemberRepository(em);
 
     }
+
 
 
     @Bean
@@ -43,6 +47,8 @@ public class SpringConfig {
     @Bean
     public BoardService boardService(){return new BoardService(boardRepository());}
 
+    @Bean
+    public ReplyRepository replyRepository(){ return new JpaReplyRepository(em);}
 
 
     @Bean

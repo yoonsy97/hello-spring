@@ -1,8 +1,10 @@
 package hello.hellospring.controller;
 
 import hello.hellospring.domain.Board;
+import hello.hellospring.domain.Reply;
 import hello.hellospring.service.BoardService;
 import hello.hellospring.service.MemberService;
+import hello.hellospring.service.ReplyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +26,14 @@ public class BoardController {
 
     private final BoardService boardService;
     private final MemberService memberService;
+    private final ReplyService replyService;
 
     private static final Logger logger= LoggerFactory.getLogger(BoardController.class);
 
-    @Autowired BoardController(BoardService boardService,MemberService memberService){
+    @Autowired BoardController(BoardService boardService, MemberService memberService, ReplyService replyService){
         this.boardService=boardService;
         this.memberService=memberService;
-
+        this.replyService=replyService;
     }
 
     @GetMapping("/boardList")
@@ -58,7 +61,11 @@ public class BoardController {
     @GetMapping("/view")
     public String viewBoard(Model model,Long bno){
 
-        boardService.getBoard(bno).ifPresent(o->model.addAttribute("view",o));
+        boardService.getBoard(bno).ifPresent(board-> {
+                    model.addAttribute("reply",replyService.findRepliesByBno(board));
+                    model.addAttribute("view",board); }
+        );
+
 
         return "boards/view";
     }

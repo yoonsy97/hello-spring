@@ -27,6 +27,9 @@ public class Member {
     @OneToMany(mappedBy="writer", fetch=FetchType.EAGER)
     private List<Board> boardList=new ArrayList<Board>();
 
+    @OneToMany(mappedBy = "replywriter", fetch = FetchType.LAZY)
+    private List<Reply> replyList=new ArrayList<Reply>();
+
 
     @Builder
     public Member(String userid, String userpassword, int level) {
